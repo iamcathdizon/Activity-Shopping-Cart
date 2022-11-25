@@ -1,16 +1,11 @@
 <?php
     session_start();
     require_once('dataset.php');
-
     if(isset($_POST['btnProcess'])) {
-        if(isset($_SESSION['cartItems'][$_POST['hdnKey']][$_POST['radSize']]))
-            $_SESSION['cartItems'][$_POST['hdnKey']][$_POST['radSize']] += $_POST['txtQuantity']; 
-        else
-            $_SESSION['cartItems'][$_POST['hdnKey']][$_POST['radSize']] = $_POST['txtQuantity']; 
-        $_SESSION['totalQuantity'] += $_POST['txtQuantity'];
-        header("location: confirm.php");
+        unset($_SESSION['cartItems'][$_POST['hdnKey']][$_POST['hdnSize']]);
+        $_SESSION['totalQuantity'] -= $_POST['hdnQuantity'];
+        header("location: cart.php");
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +44,7 @@
                             <div class="product-image2">
                                 <a href="">
                                     <img class="pic-1" src="img/<?php echo $arrProducts[$_GET['k']]['photo1']; ?>">
+                                    <img class="pic-2" src="img/<?php echo $arrProducts[$_GET['k']]['photo2']; ?>">
                                 </a>                            
                             </div>                        
                         </div>
@@ -61,23 +57,15 @@
                         <p><?php echo $arrProducts[$_GET['k']]['description']; ?></p>                    
                         <hr>
                         <input type="hidden" name="hdnKey" value="<?php echo $_GET['k']; ?>">
-                        <h3 class="title">Select Size:</h3>
-                        <input type="radio" name="radSize" id="radXS" value="XS" checked>
-                        <label for="radXS" class="pr-3">XS</label>
-                        <input type="radio" name="radSize" id="radSM" value="SM">
-                        <label for="radSM" class="pr-3">SM</label>
-                        <input type="radio" name="radSize" id="radMD" value="MD">
-                        <label for="radMD" class="pr-3">MD</label>
-                        <input type="radio" name="radSize" id="radLG" value="LG">
-                        <label for="radLG" class="pr-3">LG</label>
-                        <input type="radio" name="radSize" id="radXL" value="XL">
-                        <label for="radXL" class="pr-3">XL</label>                        
+                        <input type="hidden" name="hdnSize" value="<?php echo $_GET['s']; ?>">
+                        <input type="hidden" name="hdnQuantity" value="<?php echo $_GET['q']; ?>">
+
+                        <h3 class="title">Size: <?php echo $_GET['s']; ?></h3>                        
                         <hr>
-                        <h3 class="title">Enter Quantity:</h3>
-                        <input type="number" name="txtQuantity" id="txtQuantity" class="form-control" placeholder="0" min="1" max="100" required>
+                        <h3 class="title">Quantity: <?php echo $_GET['q']; ?></h3>
                         <br>
-                        <button type="submit" name="btnProcess" class="btn btn-dark btn-lg"><i class="fa fa-check-circle"></i> Confirm Product Purchase</button>
-                        <a href="/Activity-Shopping-Cart/" class="btn btn-danger btn-lg"><i class="fa fa-arrow-left"></i> Cancel / Go Back</a>
+                        <button type="submit" name="btnProcess" class="btn btn-dark btn-lg"><i class="fa fa-trash"></i> Confirm Product Removal</button>
+                        <a href="cart.php" class="btn btn-danger btn-lg"><i class="fa fa-arrow-left"></i> Cancel / Go Back</a>
                     </div>                                
                 <?php else: ?>
                     <div class="col-12 card p-5">
