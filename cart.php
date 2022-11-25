@@ -33,7 +33,7 @@
         <div class="container">
             <div class="row mt-5">
                 <div class="col-10">
-                    <h1><i class="fa fa-store"></i> Learn IT Easy Online Shop</h1>
+                    <h1><i class="fa fa-store"></i> Tiny's Shop </h1>
                 </div>
                 <div class="col-2 text-right">
                     <a href="details.php" class="btn btn-primary">
